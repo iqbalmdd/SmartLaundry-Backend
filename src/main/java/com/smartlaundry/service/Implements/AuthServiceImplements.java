@@ -8,6 +8,7 @@ import com.smartlaundry.entity.Account;
 import com.smartlaundry.repository.AccountRepository;
 import com.smartlaundry.service.AuthService;
 import com.smartlaundry.service.JwtService;
+import com.smartlaundry.utils.Validation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImplements implements AuthService {
+    private final Validation validation;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -33,6 +35,11 @@ public class AuthServiceImplements implements AuthService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public RegisterResponse register(RegisterRequest registerRequest) {
+        validation.validate(registerRequest);
+        if (accountRepository.existsByEmail(registerRequest.getEmail())){
+            throw new IllegalArgumentException("Email already used");
+        }
+
         String hashPassword = passwordEncoder.encode(registerRequest.getPassword());
         Account account = Account.builder()
                 .name(registerRequest.getName())

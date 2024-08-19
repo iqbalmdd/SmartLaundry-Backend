@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfiguration {
+    private final AuthenticationFilter authenticationFilter;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -28,10 +29,10 @@ public class SecurityConfiguration {
                 )
 //                .exceptionHandling(exceptionHandling -> exceptionHandling
 //                        .accessDeniedHandler(accessDeniedHandler))
-//                .addFilterBefore(
-//                        authenticationFilter,
-//                        UsernamePasswordAuthenticationFilter.class
-//                )
+                .addFilterBefore(
+                        authenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
                 .build();
 
     }

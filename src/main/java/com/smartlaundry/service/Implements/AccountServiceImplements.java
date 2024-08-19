@@ -6,11 +6,13 @@ import com.smartlaundry.repository.AccountRepository;
 import com.smartlaundry.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,18 +22,22 @@ public class AccountServiceImplements implements AccountService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Account create(Account accountRequest) {
-        return null;
-    }
-
-    @Override
     public Account getById(String accoundId) {
-        return null;
+        return accountRepository.findById(accoundId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Id Not Found"));
     }
 
     @Override
     public Account getbyEmail(String email) {
-        return null;
+        return accountRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Email Not Found"));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Account update(Account account) {
+        accountRepository.findById(account.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Account Not Found"));
+        return accountRepository.saveAndFlush(account);
     }
 
     @Override

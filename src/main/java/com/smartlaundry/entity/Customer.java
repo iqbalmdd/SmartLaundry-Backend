@@ -40,7 +40,7 @@ public class Customer {
     private String phoneNo;
 
     @Column(name = "is_active")
-    private String isActive;
+    private boolean isActive;
 
     @OneToMany(mappedBy = "customerId")
     private List<Transaction> transactions;

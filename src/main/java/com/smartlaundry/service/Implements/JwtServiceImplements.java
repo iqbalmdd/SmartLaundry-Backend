@@ -55,8 +55,7 @@ public class JwtServiceImplements implements JwtService {
                     .withIssuer(ISSUER)
                     .build();
 
-//            String token = parseJwt(bearerToken);
-            verifier.verify(bearerToken);
+            verifier.verify(parseJwt(bearerToken));
             return true;
         } catch (JWTVerificationException exception){
             log.error("Invalid JWT Signature/Claims : {}", exception.getMessage());
@@ -72,7 +71,7 @@ public class JwtServiceImplements implements JwtService {
                     .withIssuer(ISSUER)
                     .build();
 
-            DecodedJWT decodedJWT = verifier.verify(bearerToken);
+            DecodedJWT decodedJWT = verifier.verify(parseJwt(bearerToken));
             return JwtClaims.builder()
                     .accountId(decodedJWT.getSubject())
                     .build();
