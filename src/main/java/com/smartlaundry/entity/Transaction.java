@@ -33,12 +33,12 @@ public class Transaction {
     }
 
     @ManyToOne
-    @JoinColumn(name = "customerId")
-    private Customer customerId;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "service_type_id")
-    private ServiceType serviceTypeId;
+    private ServiceType serviceType;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

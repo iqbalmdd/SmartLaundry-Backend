@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = APIUrl.CUSTOMER_API)
@@ -26,6 +28,17 @@ public class CustomerController {
                 .data(customer)
                 .build();
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<CommonResponse<List<Customer>>> getAll(@PathVariable String accountId){
+        List<Customer> customer = customerService.getAllByAccount(accountId);
+        CommonResponse<List<Customer>> response = CommonResponse.<List<Customer>>builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Success Get All Customer")
+                .data(customer)
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping

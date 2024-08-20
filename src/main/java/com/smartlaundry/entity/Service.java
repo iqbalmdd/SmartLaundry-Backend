@@ -41,7 +41,7 @@ public class Service {
     @JsonBackReference
     private Account accountId;
 
-    @OneToMany(mappedBy = "serviceId")
+    @OneToMany(mappedBy = "service")
     @JsonBackReference
     private List<ServiceType> serviceTypesId;
 }

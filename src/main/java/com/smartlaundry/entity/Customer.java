@@ -40,13 +40,13 @@ public class Customer {
     private String phoneNo;
 
     @Column(name = "is_active")
-    private boolean isActive;
+    private boolean active;
 
-    @OneToMany(mappedBy = "customerId")
+    @OneToMany(mappedBy = "customer")
     private List<Transaction> transactions;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
     @JsonBackReference
-    private Account accountId;
+    private Account account;
 }

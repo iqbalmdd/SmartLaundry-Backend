@@ -34,19 +34,19 @@ public class ServiceType {
     @ManyToOne
     @JoinColumn(name = "account_id")
     @JsonBackReference
-    private Account accountId;
+    private Account account;
 
     @ManyToOne
     @JoinColumn(name = "type_id")
     @JsonManagedReference
-    private Type typeId;
+    private Type type;
 
     @ManyToOne
     @JoinColumn(name = "service_id")
     @JsonManagedReference
-    private Service serviceId;
+    private Service service;
 
-    @OneToMany(mappedBy = "serviceTypeId")
+    @OneToMany(mappedBy = "serviceType")
     private List<Transaction> transactions;
 
     @Column(name = "price")

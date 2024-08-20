@@ -35,7 +35,7 @@ public class Account implements UserDetails {
     }
 
     @OneToOne
-    @JoinColumn(name = "image_id")
+    @JoinColumn(name = "image")
     private Image image;
 
     @Column(name = "name", nullable = false)
@@ -57,11 +57,11 @@ public class Account implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(mappedBy = "account")
     @JsonManagedReference
     private List<Customer> customers;
 
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(mappedBy = "account")
     @JsonManagedReference
     private List<ServiceType> serviceTypes;
 

@@ -33,7 +33,7 @@ public class Type {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "typeId")
+    @OneToMany(mappedBy = "type")
     @JsonBackReference
     private List<ServiceType> serviceTypes;
 }
