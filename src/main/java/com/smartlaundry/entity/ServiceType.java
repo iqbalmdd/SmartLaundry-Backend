@@ -3,6 +3,7 @@ package com.smartlaundry.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.smartlaundry.constant.ConstantTable;
+import com.smartlaundry.constant.Type;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,20 +32,20 @@ public class ServiceType {
         return "SVT" + uuid.substring(0,5);
     }
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "image_path")
+    private String imagePath;
+
     @ManyToOne
     @JoinColumn(name = "account_id")
     @JsonBackReference
     private Account account;
 
-    @ManyToOne
-    @JoinColumn(name = "type_id")
-    @JsonManagedReference
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private Type type;
-
-    @ManyToOne
-    @JoinColumn(name = "service_id")
-    @JsonManagedReference
-    private Service service;
 
     @OneToMany(mappedBy = "serviceType")
     private List<Transaction> transactions;
